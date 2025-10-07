@@ -29,7 +29,7 @@ f = 1.7952
 #b prey to predator conversion factor
 b = 0.438
 #k bdelloplast maturation rate
-k = 2.616
+k = 6
 
 # Initial conditions: N0 (prey) and P0 (predator)
 N0 = 100000
@@ -85,17 +85,6 @@ plt.xlabel('V (Interaction Parameter)')
 plt.ylabel('c (Intrinsic Growth Rate)')
 plt.title('Heatmap of Prey Population Difference')
 plt.savefig("FigureS5C.svg", format="svg")
-plt.show()
-
-plt.figure(figsize=(10, 8))
-plt.imshow(heatmap_data2, aspect='auto', origin='lower', 
-           extent=[V_values.min(), V_values.max(), c_values.min(), c_values.max()],
-           cmap='BuPu')
-plt.colorbar(label='Pred Abundance')
-plt.xlabel('V (Interaction Parameter)')
-plt.ylabel('c (Intrinsic Growth Rate)')
-plt.title('Heatmap of Prey Population Difference')
-# plt.savefig("FigureS5E.svg", format="svg")
 plt.show()
 
 sns.histplot(x=p_list, y=np.asarray(n_list), bins=25, log_scale=(False, False), cbar=True)
@@ -157,18 +146,6 @@ plt.title('Heatmap of Prey Population Difference')
 plt.savefig("FigureS5A.svg", format="svg")
 plt.show()
 
-# Plot heatmap
-plt.figure(figsize=(10, 8))
-plt.imshow(heatmap_data2, aspect='auto', origin='lower', 
-           extent=[V_values.min(), V_values.max(), c_values.min(), c_values.max()],
-           cmap='BuPu')
-plt.colorbar(label='Pred Abundance')
-plt.xlabel('V (Interaction Parameter)')
-plt.ylabel('c (Intrinsic Growth Rate)')
-plt.title('Heatmap of Prey Population Difference')
-# plt.savefig("FigureS5B.svg", format="svg")
-plt.show()
-
 sns.histplot(x=p_list, y=np.asarray(n_list), bins=25, log_scale=(False, False), cbar=True)
 plt.ylabel('Effect on Prey')
 plt.xlabel('Predator Abundance')
@@ -228,20 +205,9 @@ plt.title('Heatmap of Prey Population Difference')
 plt.savefig("FigureS5E.svg", format="svg")
 plt.show()
 
-# Plot heatmap
-plt.figure(figsize=(10, 8))
-plt.imshow(heatmap_data2, aspect='auto', origin='lower', 
-           extent=[V_values.min(), V_values.max(), c_values.min(), c_values.max()],
-           cmap='BuPu')
-plt.colorbar(label='Pred Abundance')
-plt.xlabel('V (Interaction Parameter)')
-plt.ylabel('c (Intrinsic Growth Rate)')
-plt.title('Heatmap of Prey Population Difference')
-# plt.savefig("FigureS5H.svg", format="svg")
-plt.show()
-
 sns.histplot(x=p_list, y=np.asarray(n_list), bins=25, log_scale=(False, False), cbar=True)
 plt.ylabel('Effect on Prey')
 plt.xlabel('Predator Abundance')
 plt.savefig("FigureS5F.svg", format="svg")
+
 plt.show()
