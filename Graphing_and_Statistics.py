@@ -29,9 +29,10 @@ def average(df, subject, times):
     time_return = []
     for t2 in times:
         df2 = df.drop(df[(df.Day != t2)].index, inplace = False)
+        print(df2)
         if len(df2) > 0:
             
-            df2 = df2.apply(lambda x: pd.to_numeric(x, errors='coerce')).dropna()
+            df2 = df2.apply(lambda x: pd.to_numeric(x, errors='ignore')).dropna()
             average_m.append(np.mean(df2[subject]))
             average_std.append(stats.sem(df2[subject]))
             time_return.append(t2)
@@ -143,8 +144,8 @@ ax2.set_xlim(2.75, 6.25)
 ax1.set_xlim(2.75, 6.25)
 ax1.set_ylim(0,16000)
 ax2.set_ylim(0,600000)
-ax2.set_ylabel('Prey')
-ax1.set_ylabel('Pred')
+ax2.set_ylabel('Prey (um)')
+ax1.set_ylabel('Pred (um)')
 ax1.set_xlabel('Time d')
 plt.title('Chitin, WT')
 plt.savefig('Figure1A.svg', format='svg')
@@ -267,14 +268,12 @@ plt.figure(figsize=(3,3))
 plt.plot(np.asarray(bins_sample[:]),y_data, color='black')
 plt.scatter(bins_sample[:], y_data, color='black')
 plt.grid(None)
-plt.ylabel('Predation Probability', fontsize=20)
-plt.xlabel('Neighborhood Cell Packing', fontsize=20)
+plt.ylabel('Predation Probability')
+plt.xlabel('Cell Packing')
 plt.vlines(vline, 0, 1.2, color='black', linestyle='--')
 plt.xlim(0,1)
 plt.ylim(0,1.2)
 plt.grid(None)
-plt.xticks(fontsize=20)
-plt.yticks(fontsize=20)
 plt.savefig('Figure1G.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
         transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
@@ -295,8 +294,8 @@ plt.figure(figsize=(3,3))
 sns.histplot(data=f1, x='Density', bins=50, color='#FAA51A', alpha=0.5, stat='probability', label ='GlcNAc2, WT', cumulative=False, weights='Vol')
 sns.histplot(data=f2, x='Density', bins=50, color='#6CCBD8', alpha=0.5, stat='probability', label ='Chitin, WT', cumulative=False, weights='Vol')
 sns.histplot(data=f3, x='Density', bins=50, color='#7D2880', alpha=0.5, stat='probability', label ='GlcNAc, WT', cumulative=False, weights='Vol')
-plt.ylabel('Volume Weighted Frequency (area sums to 1)')
-plt.xlabel('Neighborhood Cell Packing (6um)')
+plt.ylabel('Volume Weighted Frequency')
+plt.xlabel('Cell Packing (6um)')
 plt.ylim(0,0.20)
 plt.xlim(0,1)
 
@@ -334,106 +333,21 @@ bins = [0.        , 0.01010101, 0.02020202, 0.03030303, 0.04040404,
        0.95959596, 0.96969697, 0.97979798, 0.98989899, 1.        ]
 
 #pulled from percolation model
-perc_prob = [np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(0.99),
- np.float64(1.0),
- np.float64(1.0),
- np.float64(0.995),
- np.float64(1.0),
- np.float64(0.985),
- np.float64(0.98),
- np.float64(0.99),
- np.float64(0.98),
- np.float64(0.99),
- np.float64(0.985),
- np.float64(0.98),
- np.float64(0.99),
- np.float64(0.98),
- np.float64(0.97),
- np.float64(0.955),
- np.float64(0.96),
- np.float64(0.945),
- np.float64(0.975),
- np.float64(0.955),
- np.float64(0.915),
- np.float64(0.94),
- np.float64(0.935),
- np.float64(0.88),
- np.float64(0.83),
- np.float64(0.88),
- np.float64(0.845),
- np.float64(0.81),
- np.float64(0.765),
- np.float64(0.87),
- np.float64(0.715),
- np.float64(0.72),
- np.float64(0.75),
- np.float64(0.715),
- np.float64(0.615),
- np.float64(0.62),
- np.float64(0.54),
- np.float64(0.515),
- np.float64(0.425),
- np.float64(0.425),
- np.float64(0.39),
- np.float64(0.33),
- np.float64(0.31),
- np.float64(0.305),
- np.float64(0.3),
- np.float64(0.23),
- np.float64(0.15),
- np.float64(0.15),
- np.float64(0.105),
- np.float64(0.095),
- np.float64(0.06),
- np.float64(0.035),
- np.float64(0.03),
- np.float64(0.005),
- np.float64(0.005),
- np.float64(0.0),
- np.float64(0.0),
- np.float64(0.0)]
+perc_prob = [np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0),
+ np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0),
+ np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0),
+ np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0),
+ np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0),
+ np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0), np.float64(1.0),
+ np.float64(1.0), np.float64(0.99), np.float64(1.0), np.float64(1.0), np.float64(0.995), np.float64(1.0), np.float64(0.985),
+ np.float64(0.98), np.float64(0.99), np.float64(0.98), np.float64(0.99), np.float64(0.985), np.float64(0.98), np.float64(0.99),
+ np.float64(0.98), np.float64(0.97), np.float64(0.955), np.float64(0.96), np.float64(0.945), np.float64(0.975), np.float64(0.955),
+ np.float64(0.915), np.float64(0.94), np.float64(0.935), np.float64(0.88), np.float64(0.83), np.float64(0.88), np.float64(0.845),
+ np.float64(0.81), np.float64(0.765), np.float64(0.87), np.float64(0.715), np.float64(0.72), np.float64(0.75), np.float64(0.715), 
+ np.float64(0.615), np.float64(0.62), np.float64(0.54), np.float64(0.515), np.float64(0.425), np.float64(0.425),
+ np.float64(0.39), np.float64(0.33), np.float64(0.31), np.float64(0.305), np.float64(0.3), np.float64(0.23), np.float64(0.15),
+ np.float64(0.15), np.float64(0.105), np.float64(0.095), np.float64(0.06), np.float64(0.035), np.float64(0.03),
+ np.float64(0.005), np.float64(0.005), np.float64(0.0), np.float64(0.0), np.float64(0.0)]
 
 chitin_predated = 0 
 glcnac_predated = 0
@@ -444,6 +358,7 @@ for i in np.arange(0,len(bins)-1):
     chitin_predated+= perc_prob[i+1]*np.sum(data_chitin['Vol'])
     glcnac_predated+= perc_prob[i+1]*np.sum(data_glcnac['Vol'])
 
+#these printed values are used in Figure 1 
 print(chitin_predated/np.sum(f2['Vol']))    
 print(glcnac_predated/np.sum(f3['Vol']))    
 #%%
@@ -484,8 +399,8 @@ y = data[1]
 
 plt.plot(x,y,color='firebrick', alpha=1, label ='Chitin, WT')
 
-plt.ylabel('Frequency')
-plt.xlabel('Neighborhood Cell Packing (6um)')
+plt.ylabel('Volume Weighted Frequency')
+plt.xlabel('Cell Packing (6um)')
 plt.ylim(0,1.01)
 plt.xlim(-0.01,1.01)
 
@@ -657,7 +572,7 @@ fig = plt.figure(figsize=(3, 3))
 for i in np.arange(0,len(df)):
     plt.errorbar(x=df['Density'][i], y=df['PredEffect'][i],  ls = "None", color=df['Color'][i], yerr=df['PredEffectErr'][i], xerr=df['DensitySem'][i], alpha=0.5,  elinewidth=1)
     plt.scatter(x=df['Density'][i], y=df['PredEffect'][i], marker=df['Marker'][i], color=df['Color'][i],  s=50, alpha=0.75)
-plt.ylabel('Pred Effect')
+plt.ylabel('Pred Effect (um)')
 plt.xlabel('Median Density')
 
 plt.xlim(0,1)
@@ -681,12 +596,12 @@ plot_dict = {
 
 plt.figure(figsize=(2,3))
 plt.boxplot(plot_dict.values(), showfliers=False, widths=0.5)
-plt.xticks(ticks=[1,2], labels=plot_dict.keys(), fontsize=20)
+plt.xticks(ticks=[1,2], labels=plot_dict.keys())
 
 plt.scatter((simple_beeswarm2((plot_dict['Chitin_VPS']), nbins=2))+1, plot_dict['Chitin_VPS'], alpha=0.5, color='#59BA57', s=75, marker='p')
 plt.scatter((simple_beeswarm2((plot_dict['GlcNAc_VPS'])))+2, plot_dict['GlcNAc_VPS'], alpha=0.5, color='#59BA57', s=75, marker='o')
 plt.xticks(rotation=45)
-plt.ylabel(r'Shell Mean Object Biovolume', fontsize=12)
+plt.ylabel(r'Shell Median', fontsize=12)
 plt.xlabel(r'Treatment', fontsize = 12)
 plt.savefig('Figure3A.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
@@ -709,12 +624,12 @@ plot_dict = {
 
 plt.figure(figsize=(2,3))
 plt.boxplot(plot_dict.values(), showfliers=False, widths=0.5)
-plt.xticks(ticks=[1,2], labels=plot_dict.keys(), fontsize=20)
+plt.xticks(ticks=[1,2], labels=plot_dict.keys())
 
 plt.scatter((simple_beeswarm2(plot_dict['Chitin_Bap1']))+1, plot_dict['Chitin_Bap1'], alpha=0.5, color='#59BA57', s=75, marker='p')
 plt.scatter((simple_beeswarm2(plot_dict['GlcNAc_Bap1']))+2, plot_dict['GlcNAc_Bap1'], alpha=0.5, color='#59BA57', s=75)
 plt.xticks(rotation=45)
-plt.ylabel(r'Shell Mean Object Biovolume', fontsize=12)
+plt.ylabel(r'Shell Median', fontsize=12)
 plt.xlabel(r'Treatment', fontsize = 12)
 plt.savefig('Figure3B.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
@@ -737,12 +652,12 @@ plot_dict = {
 
 plt.figure(figsize=(2,3))
 plt.boxplot(plot_dict.values(), showfliers=False, widths=0.5)
-plt.xticks(ticks=[1,2], labels=plot_dict.keys(), fontsize=20)
+plt.xticks(ticks=[1,2], labels=plot_dict.keys())
 
 plt.scatter((simple_beeswarm2(plot_dict['Chitin_RbmC']))+1, plot_dict['Chitin_RbmC'], alpha=0.5, color='#59BA57', s=75, marker='p')
 plt.scatter((simple_beeswarm2(plot_dict['GlcNAc_RbmC']))+2, plot_dict['GlcNAc_RbmC'], alpha=0.5, color='#59BA57', s=75)
 plt.xticks(rotation=45)
-plt.ylabel(r'Shell Mean Object Biovolume', fontsize=12)
+plt.ylabel(r'Shell Median', fontsize=12)
 plt.xlabel(r'Treatment', fontsize = 12)
 plt.savefig('Figure3C.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
@@ -765,7 +680,7 @@ plot_dict = {
 
 plt.figure(figsize=(2,3))
 plt.boxplot(plot_dict.values(), showfliers=False, widths=0.5)
-plt.xticks(ticks=[1,2], labels=plot_dict.keys(), fontsize=20)
+plt.xticks(ticks=[1,2], labels=plot_dict.keys())
 
 plt.scatter((simple_beeswarm2(plot_dict['Chitin_RbmA']))+1, plot_dict['Chitin_RbmA'], alpha=0.5, color='#59BA57', s=75)
 plt.scatter((simple_beeswarm2(plot_dict['GlcNAc_RbmA']))+2, plot_dict['GlcNAc_RbmA'], alpha=0.5, color='#59BA57', s=75, marker='p')
@@ -856,15 +771,15 @@ plot_dict = {
 
 plt.figure(figsize=(2.5,3.5))
 plt.boxplot(plot_dict.values(), showfliers=False, widths=0.5)
-plt.xticks(ticks=[1,2,3], labels=plot_dict.keys(), fontsize=20)
+plt.xticks(ticks=[1,2,3], labels=plot_dict.keys())
 
 plt.scatter((simple_beeswarm2((plot_dict['Chitin_RbmA']), nbins=2))+1, plot_dict['Chitin_RbmA'], alpha=0.5, color='#59BA57', s=75, marker='p')
 plt.scatter((simple_beeswarm2((plot_dict['Chitin_r_RbmA'])))+2, plot_dict['Chitin_r_RbmA'], alpha=0.5, color='#59BA57', s=75, marker='p')
 plt.scatter((simple_beeswarm2((plot_dict['GlcNAc_RbmA'])))+3, plot_dict['GlcNAc_RbmA'], alpha=0.5, color='#59BA57', s=75, marker='o')
 plt.xticks(rotation=45)
-plt.ylabel(r'Shell Mean Object Biovolume', fontsize=12)
+plt.ylabel(r'Shell Median', fontsize=12)
 plt.xlabel(r'Treatment', fontsize = 12)
-plt.title('Day 5 Immunostaining', fontsize = 20)
+plt.title('Immunostaining')
 plt.savefig('Figure4D.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
         transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
@@ -887,8 +802,8 @@ sns.histplot(data=f1, x='Density', bins=50, color='#70CDDD', alpha=0.5, stat='pr
 sns.histplot(data=f2, x='Density', bins=50, color='black', alpha=0.5, stat='probability', label ='Chitin, Rugose, del vpsL', weights='Vol')
 sns.histplot(data=f3, x='Density', bins=50, color='purple', alpha=0.5, stat='probability', label ='Chitin, Rugose', weights='Vol')
     
-plt.ylabel('Frequency (area sums to 1)')
-plt.xlabel('Neighborhood Cell Packing (6um)')
+plt.ylabel('Volume Weighted Frequency')
+plt.xlabel('Cell Packing (6um)')
 # plt.ylim(0,0.1)
 plt.xlim(0,1)
 plt.legend()
@@ -1109,9 +1024,104 @@ plt.xlabel('Time (d)')
 plt.ylabel('Fraction Chitin Remaining')
 plt.savefig('FigureS2D.svg', format='svg')
 plt.show()
+
 #%%
 """
-SI Figure S3D
+SI Figure S3A
+Related to Figure 1
+
+Box and whisker plot comparing biovolume accumulation at time of predator addition
+"""
+
+df_chitin = pd.read_excel('SI_Data.xlsx', sheet_name='Fig1A.1')
+df_glcnac2 = pd.read_excel('SI_Data.xlsx', sheet_name='Fig1B.1')
+df_glcnac = pd.read_excel('SI_Data.xlsx', sheet_name='Fig1C.1')
+
+plot_dict = {'Chitin':list(df_chitin.drop(df_chitin[df_chitin.Day > 3].index)['Prey']), 
+             'GlcNAc2':list(df_glcnac2.drop(df_glcnac2[df_glcnac2.Day > 3].index)['Prey']),
+             'GlcNAc':list(df_glcnac.drop(df_glcnac[df_glcnac.Day > 3].index)['Prey'])}
+
+plt.figure(figsize=(3,4))
+plt.boxplot(plot_dict.values(), showfliers=False)
+plt.xticks(ticks=[1,2, 3], labels=plot_dict.keys(), fontsize=20)
+
+plt.scatter((simple_beeswarm2(plot_dict['Chitin']))+1, plot_dict['Chitin'], alpha=0.5, color='cyan', marker='p', s=75)
+plt.scatter((simple_beeswarm2(plot_dict['GlcNAc2']))+2, plot_dict['GlcNAc2'], alpha=0.5, color='orange', marker='s', s=75)
+plt.scatter((simple_beeswarm2(plot_dict['GlcNAc']))+3, plot_dict['GlcNAc'], alpha=0.5, color='purple', s=75)
+
+plt.xticks(rotation=45)
+plt.ylim(-50000, 700000)
+plt.ylabel(r'Biovolume', fontsize=20)
+plt.xlabel(r'Treatment', fontsize = 20)
+plt.title('WT', fontsize = 20)
+plt.savefig('FigureS3A.svg', dpi=300, facecolor='w', edgecolor='b',
+        orientation='portrait', format='svg',
+        transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
+plt.show()
+
+print(mannwhitneyu(plot_dict['Chitin'], plot_dict['GlcNAc']))
+print(mannwhitneyu(plot_dict['Chitin'], plot_dict['GlcNAc2']))
+#%%
+"""
+SI Figure S3B
+
+Comparison of predator dynamics
+"""
+df_pred =  pd.read_excel('SI_Data.xlsx', sheet_name='Fig1A.2') 
+plt.figure(figsize=(3,4))
+
+times= np.arange(3,7,1)
+p_mean, p_std, times = average(df_pred, 'Pred', times)
+
+plt.plot(times, p_mean, '#6CCBD8')
+plt.errorbar(x=times, y=p_mean, c='#6CCBD8', fmt='p', yerr=p_std, capsize=5, elinewidth=1, markeredgewidth=1)
+
+df_pred =  pd.read_excel('SI_Data.xlsx', sheet_name='Fig1B.2') 
+
+times= np.arange(3,6,1)
+p_mean, p_std, times = average(df_pred, 'Pred', times)
+plt.plot(times, p_mean, '#FAA51A')
+plt.errorbar(x=times, y=p_mean, c='#FAA51A', fmt='s', yerr=p_std, capsize=5, elinewidth=1, markeredgewidth=1)
+
+df_pred =  pd.read_excel('SI_Data.xlsx', sheet_name='Fig1C.2') 
+
+times= np.arange(3,6,1)
+p_mean, p_std, times = average(df_pred, 'Pred', times)
+plt.plot(times, p_mean, '#7D2880')
+plt.errorbar(x=times, y=p_mean, c='#7D2880', fmt='o', yerr=p_std, capsize=5, elinewidth=1, markeredgewidth=1)
+
+plt.ylabel('Bdello biovolume')
+plt.xlabel('Time (d)')
+plt.savefig('FigureS3B.svg', format='svg')
+plt.show()
+#%%
+"""
+SI Figure S3C 
+Related to Figure 1
+
+Cell packing at day 5 with no predation
+"""
+df1 = pd.read_excel("SI_Data.xlsx", sheet_name='SI_Figure_S3C_1')
+
+df2 = pd.read_excel("SI_Data.xlsx", sheet_name='SI_Figure_S3C_2')
+
+df3 = pd.read_excel("SI_Data.xlsx", sheet_name='SI_Figure_S3C_3')
+
+plt.figure(figsize=(3,4))
+sns.histplot(data=df1, x='Density', bins=50, color='#6CCBD8', alpha=0.5, stat='probability', label ='Chitin', cumulative=False, weights='Vol')
+sns.histplot(data=df2, x='Density', bins=50, color='#FAA51A', alpha=0.5, stat='probability', label ='GlcNAc2', cumulative=False, weights='Vol')
+sns.histplot(data=df3, x='Density', bins=50, color='#7D2880', alpha=0.5, stat='probability', label ='GlcNAc, WT', cumulative=False, weights='Vol')
+plt.title('Day 5, P-')
+plt.legend()
+plt.ylim(0,0.3)
+plt.xlim(0,1)
+plt.xlabel('Cell packing')
+plt.ylabel('Volume Weighted Frequency')
+plt.savefig('FigureS3C.svg', format='svg')
+plt.show()
+#%%
+"""
+SI Figure S4D
 
 Related to Figure 1
 
@@ -1139,20 +1149,20 @@ for i in np.arange(0,len(bins)-1):
 plt.figure(figsize=(3,3))
 plt.plot(np.log10(np.asarray(bins_sample[:])),np.log10(y_data), color='black')
 plt.grid(None)
-plt.ylabel('Predation Probability', fontsize=20)
-plt.xlabel('Neighborhood Cell Packing', fontsize=20)
+plt.ylabel('Predation Probability')
+plt.xlabel('Cell Packing')
 plt.xlim(-1,0)
 plt.ylim(-1,0.1)
 plt.grid(None)
 plt.xticks(fontsize=20)
 plt.yticks(fontsize=20)
-plt.savefig('SI_Figure_S3D.svg', dpi=300, facecolor='w', edgecolor='b',
+plt.savefig('SI_Figure_S4D.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
         transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
 plt.show()
 #%%
 """
-SI Figure S4A
+SI Figure S5A
 """
 #load data from excel
 df = pd.read_excel('SI_Data.xlsx', sheet_name='Fig2B_Chitin') 
@@ -1166,13 +1176,14 @@ sns.regplot(data=data_reg, x='Day', y='Biovolume', marker='p', line_kws={'label'
 print(slope1, intercept1, r_value1, p_value1, std_err1)
 
 plt.scatter(df['Day'], df['Biovolume'], marker='p', alpha=0.5, color='purple', s=80)
+plt.ylabel('ln(Biovolume)')
 plt.title('Chitin, WT')
 plt.xlim(-0.25,3.25)
 plt.ylim(5,15)
 
-plt.savefig('SI_FigureS4A_Chitin.svg', format='svg')
+plt.savefig('SI_FigureS5A_Chitin.svg', format='svg')
 plt.show()
-23#%%
+#%%
 #load data from excel
 df = pd.read_excel('SI_Data.xlsx', sheet_name='Fig2B_GlcNAc') 
 df['Biovolume'] = np.log(df['Biovolume'])
@@ -1184,16 +1195,17 @@ sns.regplot(data=data_reg, x='Day', y='Biovolume', marker='p', line_kws={'label'
 #r for glcnac
 print(slope1, intercept1, r_value1, p_value1, std_err1)
 
-plt.scatter(df['Day'], df['Biovolume'], marker='p', alpha=0.5, color='purple', s=80)
+plt.scatter(df['Day'], df['Biovolume'], marker='o', alpha=0.5, color='purple', s=80)
+plt.ylabel('ln(Biovolume)')
 plt.title('GlcNAc, WT')
 plt.xlim(-0.25,3.25)
 plt.ylim(5,15)
 
-plt.savefig('SI_FigureS4A_GlcNAc.svg', format='svg')
+plt.savefig('SI_FigureS5A_GlcNAc.svg', format='svg')
 plt.show()
 #%%
 """
-SI Figure S4B
+SI Figure S5B
 Related to Figure 2
 
 carrying capacity of WT
@@ -1223,7 +1235,7 @@ plt.xlabel(r'Carbon Source', fontsize = 20)
 plt.ylim(0,700000)
 
 plt.title('Biovolume', fontsize = 20)
-plt.savefig('SI_FigureS4B.svg', dpi=300, facecolor='w', edgecolor='b',
+plt.savefig('SI_FigureS5B.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
         transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
 plt.show()
@@ -1238,12 +1250,12 @@ Related to Figure 2
 
 Death curve of Bdello monoculture 
 """
-df = pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S4C') 
+df = pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S5C') 
 
 # Parameters
 D = 1.7952   # dilution rate, 1/h
-x0 = 15000*2 # initial concentration (mM, g/L, etc.)
-t_span = (0, 24)  # time span (hours)
+x0 = 15000*2 # initial concentration of Bdello
+t_span = (0, 24)  # time (hours)
 t_eval = np.linspace(t_span[0], t_span[1], 200)
 
 # ODE definition
@@ -1255,25 +1267,25 @@ sol = solve_ivp(dxdt, t_span, [x0], args=(D,), t_eval=t_eval)
 
 # Plot
 fig, ax1 = plt.subplots(figsize=(3, 3))
-plt.plot(sol.t, sol.y[0], label="Numerical solution", lw=2, linestyle='--')
+plt.plot(sol.t, sol.y[0], label="Dilution", lw=2, linestyle='--')
 plt.scatter(df['Time'], df['Bdello'], c='gold', alpha=0.75, marker='p')
 plt.legend(loc='upper center', bbox_to_anchor=(0.5, -0.2))
 plt.xticks(np.arange(0,25,12))
 plt.xlim(-1,25)
 ax1.set_ylabel('Bdello')
 ax1.set_xlabel('Time (h)')
-plt.savefig('SI_FigureS4C.svg', format='svg')
+plt.savefig('SI_FigureS5C.svg', format='svg')
 plt.show()
 #%%
 """
-SI Figure S5 
+SI Figure S6
 Related to Figure 1
 
 See model scripts. 
 """
 #%%
 """
-SI Figure S6A
+SI Figure S7A
 Related to Figure 3
 
 Box and whisker plot of delta rbmA predation in GlcNAc
@@ -1302,7 +1314,7 @@ plt.xlabel(r'Treatment', fontsize = 20)
 plt.title('rbmA del', fontsize = 20)
 plt.ylim(-50000, 700000)
 
-plt.savefig('FigureS6A.svg', dpi=300, facecolor='w', edgecolor='b',
+plt.savefig('FigureS7A.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
         transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
 plt.show()
@@ -1311,7 +1323,7 @@ print(mannwhitneyu(plot_dict['48hPI P-'], plot_dict['48hPI P+']))
 print(mannwhitneyu(plot_dict['2hPI P-'], plot_dict['2hPI P+']))
 #%%
 """
-SI Figure S6B
+SI Figure S7B
 Related to Figure 3
 
 Box and whisker plot of delta vpsL predation in GlcNAc
@@ -1338,7 +1350,7 @@ plt.ylabel(r'Biovolume', fontsize=20)
 plt.xlabel(r'Treatment', fontsize = 20)
 plt.title('vpsL del', fontsize = 20)
 plt.ylim(-50000, 700000)
-plt.savefig('FigureS6B.svg', dpi=300, facecolor='w', edgecolor='b',
+plt.savefig('FigureS7B.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
         transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
 plt.show()
@@ -1348,59 +1360,96 @@ print(mannwhitneyu(plot_dict['2hPI P-'], plot_dict['2hPI P+']))
 
 #%%
 """
-SI Figure S7
+SI Figure S7E
+Related to Figure 3
+
+Box and whisker plot of delta vpsL and WT bdello plaques from a 10**9 stock of bdello
+"""
+
+plot_dict = {'WT':[142e8/100,42e8/100,192e7/100],
+             'vpsL':[140e7/100, 146e7/100, 400e8/100]}
+
+plt.figure(figsize=(3,4))
+plt.boxplot(plot_dict.values(), showfliers=False)
+plt.xticks(ticks=[1,2], labels=plot_dict.keys(), fontsize=20)
+
+plt.scatter((simple_beeswarm2(plot_dict['WT'], nbins=3))+1, plot_dict['WT'], alpha=0.5, color='purple', s=75)
+plt.scatter((simple_beeswarm2(plot_dict['vpsL'], nbins=3))+2, plot_dict['vpsL'], alpha=0.5, color='firebrick', s=75)
+
+plt.xticks(rotation=45)
+plt.ylim(1,1e9)
+plt.ylabel(r'PFU/uL', fontsize=12)
+plt.title('Plaque Assay', fontsize = 20)
+plt.yscale("log")
+plt.savefig('FigureS7E.svg', dpi=300, facecolor='w', edgecolor='b',
+        orientation='portrait', format='svg',
+        transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
+plt.show()
+
+print(mannwhitneyu(plot_dict['WT'], plot_dict['vpsL']))
+#%%
+"""
+SI Figure S8
 Related to Figure 2
 
 Images of vpsL deletion mutant grown in different carbon sources
 """
 #%%
 """
-SI Figure S8
+SI Figure S9
 Related to Figure 3
 
 Images of VPS, Bap1, RbmC, and RbmA stain. 
 """
 #%%
 """
-SI Figure S9A
+SI Figure S10C
 Related to Figure 3
 
-Competition between tcpA deletion and WT on Chitin
-Rep images exported from Zen Blue
+Dual carbon source matrix staining experiment 
+
+Control is the same expeirmental setup minus the matrix stain
 """
 
-df = pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S9A')
-x = df['RA_t0']                 
-y = df['RA_Change']
 
-slope1, intercept1, r_value1, p_value1, std_err1 = stats.linregress(x, y)
+df =  pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S10C')
 
-plt.figure(figsize=(6,3))
-sns.regplot(x=x, y=y, color='purple', ci=None, scatter=False)
-plt.scatter(x=x, y=y, color='purple', label='chitin', marker='p', s=200, alpha=0.5)
-plt.plot(np.arange(0,1.1,0.1), 1-np.arange(0,1.1,0.1), color='blue', linestyle='--')
-plt.plot(np.arange(0,1.1,0.1), -np.arange(0,1.1,0.1), color='blue', linestyle='--')
-plt.axhline(y=0, color='r', linestyle='--')
-plt.ylim(-1, 1)
-plt.xlim(0,1)
+plot_dict = {'Chitin':list(df['Chitin'].dropna()), 
+             'Control Chitin':list(df['Chitin_Control'].dropna()),
+             'Microcolony':list(df['Microcolony'].dropna()), 
+             'Control Micro':list(df['Microcolony_Control'].dropna()),}
 
-plt.legend(fontsize=12)
-plt.xlabel('vpsL RA 0 d', fontsize=12)
-plt.ylabel('vpsL RA 5 d', fontsize=12)
-plt.savefig('FigureS9A.svg', dpi=300, facecolor='w', edgecolor='b',
+plt.figure(figsize=(3,3))
+plt.boxplot(plot_dict.values(), showfliers=False)
+plt.xticks(ticks=[1,2,3,4], labels=plot_dict.keys(), fontsize=20)
+
+plt.scatter((simple_beeswarm2(plot_dict['Chitin'], nbins=5))+1, plot_dict['Chitin'], alpha=0.5, color='#59BA57', s=75, marker='p')
+plt.scatter((simple_beeswarm2(plot_dict['Control Chitin'], nbins=5))+2, plot_dict['Control Chitin'], alpha=0.5, color='grey', s=75, marker='p')
+plt.scatter((simple_beeswarm2(plot_dict['Microcolony'], nbins=5))+3, plot_dict['Microcolony'], alpha=0.5, color='#59BA57', s=75, marker='o')
+plt.scatter((simple_beeswarm2(plot_dict['Control Micro'], nbins=5))+4, plot_dict['Control Micro'], alpha=0.5, color='grey', s=75, marker='o')
+
+plt.xticks(rotation=45)
+plt.ylim(0,450)
+plt.ylabel(r'Intensity (A.U.)', fontsize=12)
+plt.title('Dual Carbon Source Immunostaining', fontsize = 20)
+plt.savefig('FigureS10C.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
         transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
 plt.show()
+
+print(mannwhitneyu(plot_dict['Chitin'], plot_dict['Control Chitin']))
+print(mannwhitneyu(plot_dict['Microcolony'], plot_dict['Control Micro']))
+print(mannwhitneyu(plot_dict['Chitin'], plot_dict['Microcolony']))
+
 #%%
 """
-SI Figure S9B
+SI Figure S11A
 Related to Figure 3
 
 Competition between vpsL deletion and WT in GlcNAc
-Rep images exported from Zen Blue.
 """
 
-df = pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S9B')
+df = pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S11B')
 x = df['RA_t0']                 
 y = df['RA_Change']
 
@@ -1411,64 +1460,58 @@ print(r_value1**2)
 print(p_value1)
 
 plt.figure(figsize=(6,3))
-sns.regplot(x=x, y=y, color='purple', label='chitin', ci=None, scatter=False)
-plt.scatter(x=x, y=y, color='purple', label='chitin', s=200, alpha=0.5)
+sns.regplot(x=x, y=y, color='red', ci=None, scatter=False)
+plt.scatter(x=x, y=y, color='red', s=200, alpha=0.5)
 plt.plot(np.arange(0,1.1,0.1), 1-np.arange(0,1.1,0.1), color='blue', linestyle='--')
 plt.plot(np.arange(0,1.1,0.1), -np.arange(0,1.1,0.1), color='blue', linestyle='--')
 plt.axhline(y=0, color='r', linestyle='--')
 plt.ylim(-1, 1)
 plt.xlim(0,1)
 
-plt.legend(fontsize=12)
 plt.xlabel('vpsL RA 0 d', fontsize=12)
 plt.ylabel('vpsL RA 5 d', fontsize=12)
-plt.savefig('FigureS9B.svg', dpi=300, facecolor='w', edgecolor='b',
+plt.savefig('FigureS11A.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
         transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
 plt.show()
 #%%
 """
-SI Figure S9C
+SI Figure S11B
 Related to Figure 3
 
 Competition between vpsL deletion and WT on Chitin
-Rep images exported from Zen Blue
 """
 
-df = pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S9C')
+df = pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S11A')
 x = df['RA_t0']                 
 y = df['RA_Change']
 
 slope1, intercept1, r_value1, p_value1, std_err1 = stats.linregress(x, y)
-print(r_value1**2)
-print(p_value1)
 
 plt.figure(figsize=(6,3))
-sns.regplot(x=x, y=y, color='purple', label='chitin', ci=None, scatter=False)
-plt.scatter(x=x, y=y, color='purple', label='chitin', marker='p', s=200, alpha=0.5)
+sns.regplot(x=x, y=y, color='red', ci=None, scatter=False)
+plt.scatter(x=x, y=y, color='red', marker='p', s=200, alpha=0.5)
 plt.plot(np.arange(0,1.1,0.1), 1-np.arange(0,1.1,0.1), color='blue', linestyle='--')
 plt.plot(np.arange(0,1.1,0.1), -np.arange(0,1.1,0.1), color='blue', linestyle='--')
 plt.axhline(y=0, color='r', linestyle='--')
 plt.ylim(-1, 1)
 plt.xlim(0,1)
 
-plt.legend(fontsize=12)
-plt.xlabel('tcpA RA 0 d', fontsize=12)
-plt.ylabel('tcpA RA 5 d', fontsize=12)
-plt.savefig('FigureS9C.svg', dpi=300, facecolor='w', edgecolor='b',
+plt.xlabel('vpsL RA 0 d', fontsize=12)
+plt.ylabel('vpsL RA 5 d', fontsize=12)
+plt.savefig('FigureS11B.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
         transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
 plt.show()
 #%%
 """
-SI Figure S9D
+SI Figure S11C
 Related to Figure 3
 
 Competition between tcpA deletion and WT in GlcNAc
-Rep images exported from Zen Blue.
 """
 
-df = pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S9D')
+df = pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S11C')
 x = df['RA_t0']                 
 y = df['RA_Change']
                 
@@ -1477,26 +1520,56 @@ print(r_value1**2)
 print(p_value1)
 
 plt.figure(figsize=(6,3))
-sns.regplot(x=x, y=y, color='purple', label='chitin', ci=None, scatter=False)
-plt.scatter(x=x, y=y, color='purple', label='chitin', s=200, alpha=0.5)
+sns.regplot(x=x, y=y, color='blue', ci=None, scatter=False)
+plt.scatter(x=x, y=y, color='blue', marker='o', s=200, alpha=0.5)
 plt.plot(np.arange(0,1.1,0.1), 1-np.arange(0,1.1,0.1), color='blue', linestyle='--')
 plt.plot(np.arange(0,1.1,0.1), -np.arange(0,1.1,0.1), color='blue', linestyle='--')
 plt.axhline(y=0, color='r', linestyle='--')
 plt.ylim(-1, 1)
 plt.xlim(0,1)
 
-plt.legend(fontsize=12)
 plt.xlabel('tcpA RA 0 d', fontsize=12)
 plt.ylabel('tcpA RA 5 d', fontsize=12)
-plt.savefig('FigureS9D.svg', dpi=300, facecolor='w', edgecolor='b',
+plt.savefig('FigureS11C.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
         transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
 plt.show()
 #%%
 """
-SI Figure S10D
+SI Figure S11D
+Related to Figure 3
+
+Competition between tcpA deletion and WT on Chitin
 """
-data = pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S10D')['Pearson_r']
+
+df = pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S11D')
+x = df['RA_t0']                 
+y = df['RA_Change']
+
+slope1, intercept1, r_value1, p_value1, std_err1 = stats.linregress(x, y)
+print(r_value1**2)
+print(p_value1)
+
+plt.figure(figsize=(6,3))
+sns.regplot(x=x, y=y, color='blue', ci=None, scatter=False)
+plt.scatter(x=x, y=y, color='blue', marker='p', s=200, alpha=0.5)
+plt.plot(np.arange(0,1.1,0.1), 1-np.arange(0,1.1,0.1), color='blue', linestyle='--')
+plt.plot(np.arange(0,1.1,0.1), -np.arange(0,1.1,0.1), color='blue', linestyle='--')
+plt.axhline(y=0, color='r', linestyle='--')
+plt.ylim(-1, 1)
+plt.xlim(0,1)
+
+plt.xlabel('tcpA RA 0 d', fontsize=12)
+plt.ylabel('tcpA RA 5 d', fontsize=12)
+plt.savefig('FigureS11D.svg', dpi=300, facecolor='w', edgecolor='b',
+        orientation='portrait', format='svg',
+        transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
+plt.show()
+#%%
+"""
+SI Figure S12D
+"""
+data = pd.read_excel('SI_Data.xlsx', sheet_name='SI_Figure_S12D')['Pearson_r']
 
 plt.figure(figsize=(2,3))
 plt.boxplot(data, showfliers=False, widths=0.5)
@@ -1504,11 +1577,43 @@ plt.scatter(np.ones(len(data)), data)
 plt.ylabel('Pearson r')
 plt.xlabel('GlcNAc Z-Stacks')
 plt.ylim(0,1)
-plt.savefig('SI_Figure_S10D.svg', format='svg')
+plt.savefig('SI_Figure_S12D.svg', format='svg')
 plt.show()
 #%%
 """
-SI Figure S11A
+SI Figure S13A
+Related to Figure 1
+
+Box and whisker plot of predation on GlcNAc
+"""
+
+df_R = pd.read_excel('SI_Data.xlsx', sheet_name='Fig4H.1')
+df_R_vpsL = pd.read_excel('SI_Data.xlsx', sheet_name='Fig4I.1')
+
+plot_dict = {'R':list(df_R.drop(df_R[df_R.Day > 3].index)['Prey']), 
+             'R_vpsL':list(df_R_vpsL.drop(df_R_vpsL[df_R_vpsL.Day > 3].index)['Prey'])}
+
+plt.figure(figsize=(3,4))
+plt.boxplot(plot_dict.values(), showfliers=False)
+plt.xticks(ticks=[1,2], labels=plot_dict.keys(), fontsize=20)
+
+plt.scatter((simple_beeswarm2(plot_dict['R']))+1, plot_dict['R'], alpha=0.5, color='black', s=75, marker='p')
+plt.scatter((simple_beeswarm2(plot_dict['R_vpsL']))+2, plot_dict['R_vpsL'], alpha=0.5, color='black', s=75, marker='p')
+
+plt.xticks(rotation=45)
+plt.ylim(-50000, 700000)
+plt.ylabel(r'Biovolume', fontsize=20)
+plt.xlabel(r'Treatment', fontsize = 20)
+plt.title('WT', fontsize = 20)
+plt.savefig('FigureS13A.svg', dpi=300, facecolor='w', edgecolor='b',
+        orientation='portrait', format='svg',
+        transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
+plt.show()
+
+print(mannwhitneyu(plot_dict['R'], plot_dict['R_vpsL']))
+#%%
+"""
+SI Figure S13B
 Related to Figure 5
 
 Box and whisker plot of rugose predation on chitin
@@ -1537,7 +1642,7 @@ plt.xlabel(r'Treatment', fontsize = 20)
 plt.title('Rugose', fontsize = 20)
 
 plt.ylim(-50000, 700000)
-plt.savefig('FigureS11A.svg', dpi=300, facecolor='w', edgecolor='b',
+plt.savefig('FigureS13B.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
         transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
 plt.show()
@@ -1546,7 +1651,7 @@ print(mannwhitneyu(plot_dict['48hPI P-'], plot_dict['48hPI P+']))
 print(mannwhitneyu(plot_dict['2hPI P-'], plot_dict['2hPI P+']))
 #%%
 """
-SI Figure S11B
+SI Figure S13C
 Related to Figure 5
 
 Box and whisker plot of rugose, vpsL predation on chitin
@@ -1575,10 +1680,11 @@ plt.ylabel(r'Biovolume', fontsize=20)
 plt.xlabel(r'Treatment', fontsize = 20)
 
 plt.title('Rugose del vpsl', fontsize = 20)
-plt.savefig('FigureS11B.svg', dpi=300, facecolor='w', edgecolor='b',
+plt.savefig('FigureS13C.svg', dpi=300, facecolor='w', edgecolor='b',
         orientation='portrait', format='svg',
         transparent=False, bbox_inches='tight', pad_inches=.05, metadata=None)
 plt.show()
 
 print(mannwhitneyu(plot_dict['48hPI P-'], plot_dict['48hPI P+']))
 print(mannwhitneyu(plot_dict['2hPI P-'], plot_dict['2hPI P+']))
+
