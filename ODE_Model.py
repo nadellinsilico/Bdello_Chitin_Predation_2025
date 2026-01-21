@@ -76,8 +76,10 @@ for i, c in enumerate(c_values):
         # find cumulative difference and store it in the matrix
         heatmap_data[i, j] = N1
         heatmap_data2[i, j] = np.log(P1+0.1)
-
+#%%
 plt.figure(figsize=(10, 8))
+plt.scatter(0.9999999999999998,1.23, marker='p', s=800, color='black')
+plt.scatter(0.16471937686146473,1.46, marker='o', s=800, color='black')
 plt.imshow(heatmap_data, aspect='auto', origin='lower', 
            extent=[V_values.min(), V_values.max(), c_values.min(), c_values.max()],
            cmap='YlOrRd')
@@ -145,7 +147,7 @@ for i, c in enumerate(c_values):
         # Compute cumulative difference and store it in the matrix
         heatmap_data[i, j] = N1
         heatmap_data2[i, j] = P1
-
+#%%
 # Plot heatmap
 plt.figure(figsize=(10, 8))
 plt.imshow(heatmap_data, aspect='auto', origin='lower', 
